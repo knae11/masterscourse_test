@@ -21,7 +21,9 @@ public class PushingWords {
             if(userLine.equals("q")){
                 return;
             }
-            parseUserLine(userLine);
+            if(!parseUserLine(userLine)){
+                continue;
+            }
             printResult();
         }
     }
@@ -29,15 +31,20 @@ public class PushingWords {
     private void printResult() {
     }
 
-    private void parseUserLine(String line) {
+    private boolean parseUserLine(String line) {
         String[] parsedLine = line.split(" ");
-        validator.checkLineLength(parsedLine);
-        validator.checkNumber(parsedLine[1]);
-        validator.checkDirection(parsedLine[2]);
-        word = parsedLine[0];
-        count = Integer.parseInt(parsedLine[1]);
-        direction = parsedLine[2];
-
+        try{
+            validator.checkLineLength(parsedLine);
+            validator.checkNumber(parsedLine[1]);
+            validator.checkDirection(parsedLine[2]);
+            word = parsedLine[0];
+            count = Integer.parseInt(parsedLine[1]);
+            direction = parsedLine[2];
+            return true;
+        } catch(IllegalArgumentException i){
+            System.out.println(i.getMessage());
+            return false;
+        }
     }
 
 
