@@ -1,6 +1,10 @@
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("step-1");
+        final Scanner scanner = new Scanner(System.in);
+        new PushingWords(scanner);
+        scanner.close();
     }
 }
