@@ -29,14 +29,14 @@ public class PushingWords {
     }
 
     private void printResult() {
-        if(directionLeft){
+        if (directionLeft) {
             String resultWord = word.substring(count) + word.substring(0, count);
             System.out.println(resultWord);
         } else {
             System.out.println(word);
         }
     }
-    //TODO: handle when count is not positive int
+
     private boolean parseUserLine(String line) {
         String[] parsedLine = line.split(" ");
         try {
@@ -51,8 +51,11 @@ public class PushingWords {
 
     private void makeValuesFromParsing(String[] parsedLine) {
         word = parsedLine[0];
-        count = Integer.parseInt(parsedLine[1]) % word.length();
+        count = Math.abs(Integer.parseInt(parsedLine[1]) % word.length());
         directionLeft = handleDirection(parsedLine[2]);
+        if (Integer.parseInt(parsedLine[1])<0){
+            directionLeft = !directionLeft;
+        }
     }
 
     private boolean handleDirection(String direction) {
