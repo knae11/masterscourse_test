@@ -29,6 +29,10 @@ public class PushingWords {
     }
 
     private void printResult() {
+        StringBuilder resultWord = new StringBuilder();
+        resultWord.append(word.substring(count));
+        System.out.println(count);
+        System.out.println(resultWord);
     }
 
     private boolean parseUserLine(String line) {
@@ -36,7 +40,7 @@ public class PushingWords {
         try {
             validator.checkInput(parsedLine);
             word = parsedLine[0];
-            count = Integer.parseInt(parsedLine[1]);
+            count = Integer.parseInt(parsedLine[1]) % word.length();
             direction = parsedLine[2];
             return true;
         } catch (IllegalArgumentException i) {
