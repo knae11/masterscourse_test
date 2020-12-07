@@ -6,7 +6,7 @@ public class PushingWords {
     private final Validator validator;
     private String word;
     private int count;
-    private String direction;
+    private boolean directionLeft;
 
     public PushingWords(Scanner scanner) {
         this.scanner = scanner;
@@ -29,24 +29,34 @@ public class PushingWords {
     }
 
     private void printResult() {
-        StringBuilder resultWord = new StringBuilder();
-        resultWord.append(word.substring(count));
-        System.out.println(count);
-        System.out.println(resultWord);
+        if(directionLeft){
+            String resultWord = word.substring(count) + word.substring(0, count);
+            System.out.println(resultWord);
+        } else {
+            System.out.println(word);
+        }
     }
-
+    //TODO: handle when count is not positive int
     private boolean parseUserLine(String line) {
         String[] parsedLine = line.split(" ");
         try {
             validator.checkInput(parsedLine);
-            word = parsedLine[0];
-            count = Integer.parseInt(parsedLine[1]) % word.length();
-            direction = parsedLine[2];
+            makeValuesFromParsing(parsedLine);
             return true;
         } catch (IllegalArgumentException i) {
             System.out.println(i.getMessage());
             return false;
         }
+    }
+
+    private void makeValuesFromParsing(String[] parsedLine) {
+        word = parsedLine[0];
+        count = Integer.parseInt(parsedLine[1]) % word.length();
+        directionLeft = handleDirection(parsedLine[2]);
+    }
+
+    private boolean handleDirection(String direction) {
+        return direction.toLowerCase().equals("l");
     }
 
 
