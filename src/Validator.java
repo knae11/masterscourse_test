@@ -11,7 +11,7 @@ public class Validator {
     }
 
     private void checkLineLength(String[] parsedLine) {
-        if (parsedLine.length > 3) {
+        if (parsedLine.length != 3) {
             throw new IllegalArgumentException("공백을 기준으로 `단어 숫자 방향`을 입력해 주세요.");
         }
     }
