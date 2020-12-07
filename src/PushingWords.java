@@ -8,20 +8,20 @@ public class PushingWords {
     private int count;
     private String direction;
 
-    public PushingWords(Scanner scanner){
+    public PushingWords(Scanner scanner) {
         this.scanner = scanner;
         validator = new Validator();
         init();
     }
 
     private void init() {
-        while(true){
+        while (true) {
             System.out.print(">");
             String userLine = scanner.nextLine().trim();
-            if(userLine.equals("q")){
+            if (userLine.equals("q")) {
                 return;
             }
-            if(!parseUserLine(userLine)){
+            if (!parseUserLine(userLine)) {
                 continue;
             }
             printResult();
@@ -33,15 +33,13 @@ public class PushingWords {
 
     private boolean parseUserLine(String line) {
         String[] parsedLine = line.split(" ");
-        try{
-            validator.checkLineLength(parsedLine);
-            validator.checkNumber(parsedLine[1]);
-            validator.checkDirection(parsedLine[2]);
+        try {
+            validator.checkInput(parsedLine);
             word = parsedLine[0];
             count = Integer.parseInt(parsedLine[1]);
             direction = parsedLine[2];
             return true;
-        } catch(IllegalArgumentException i){
+        } catch (IllegalArgumentException i) {
             System.out.println(i.getMessage());
             return false;
         }
