@@ -12,6 +12,19 @@ public class CubeFace {
         }
     }
 
+    //TODO : indent 가 너무 깊다. 줄이는 방법 찾기
+    public boolean completeFace() {
+        char standard = cube[1][1];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (standard != cube[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public StringBuilder getLeftAndRightLine(int column) {
         StringBuilder line = new StringBuilder();
         for (int i = 0; i < 3; i++) {

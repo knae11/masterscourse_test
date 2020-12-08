@@ -32,9 +32,21 @@ public class RubikCube {
                 System.out.println(move);
                 system(move);
                 printer.rubikCube(rubikCube);
-
+            }
+            if (checkSuccess()) {
+                System.out.println("\n큐브를 맞추시다니 대단합니다. 축하드려요!🎉");
+                return;
             }
         }
+    }
+
+    private boolean checkSuccess() {
+        for (CubeFace face : rubikCube.values()) {
+            if (!face.completeFace()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void system(String move) {
@@ -137,8 +149,8 @@ public class RubikCube {
     }
 
     private String clockwiseOrCounter(String move, StringBuilder line) {
-        if(move.contains("2")){
-            return line.substring(6)+ line.substring(0,6);
+        if (move.contains("2")) {
+            return line.substring(6) + line.substring(0, 6);
         }
         if (move.contains("'")) {
             return line.substring(3) + line.substring(0, 3);
