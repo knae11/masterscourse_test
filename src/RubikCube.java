@@ -40,22 +40,28 @@ public class RubikCube {
     private void system(String move) {
         switch (move) {
             case "F":
-                moveFront();
+            case "F'":
+                moveFront(move);
                 break;
             case "U":
-                moveTop();
+            case "U'":
+                moveTop(move);
                 break;
             case "D":
-                moveBottom();
+            case "D'":
+                moveBottom(move);
                 break;
             case "B":
-                moveBack();
+            case "B'":
+                moveBack(move);
                 break;
             case "L":
-                moveLeft();
+            case "L'":
+                moveLeft(move);
                 break;
             case "R":
-                moveRight();
+            case "R'":
+                moveRight(move);
                 break;
             default:
                 break;
@@ -63,85 +69,89 @@ public class RubikCube {
 
     }
 
-    //TODO: Make simple methods and implement clockOtherwise conditions
-    private void moveRight() {
+    private void moveRight(String move) {
         StringBuilder line = new StringBuilder();
         line.append(rubikCube.get(Faces.TOP).getLeftAndRightLine(2));
         line.append(rubikCube.get(Faces.BACK).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.BOTTOM).getLeftAndRightLine(2));
         line.append(rubikCube.get(Faces.FRONT).getLeftAndRightLine(2));
-        String newLine = line.substring(9) + line.substring(0, 9);
+        String newLine = clockwiseOrCounter(move,line);
         rubikCube.get(Faces.TOP).setLeftAndRightCube(2, newLine.substring(0, 3));
         rubikCube.get(Faces.BACK).setLeftAndRightCube(0, newLine.substring(3, 6));
         rubikCube.get(Faces.BOTTOM).setLeftAndRightCube(2, newLine.substring(6, 9));
         rubikCube.get(Faces.FRONT).setLeftAndRightCube(2, newLine.substring(9));
     }
 
-    private void moveLeft() {
+    private void moveLeft(String move) {
         StringBuilder line = new StringBuilder();
         line.append(rubikCube.get(Faces.TOP).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.FRONT).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.BOTTOM).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.BACK).getLeftAndRightLine(2));
-        String newLine = line.substring(9) + line.substring(0, 9);
+        String newLine = clockwiseOrCounter(move,line);
         rubikCube.get(Faces.TOP).setLeftAndRightCube(0, newLine.substring(0, 3));
         rubikCube.get(Faces.FRONT).setLeftAndRightCube(0, newLine.substring(3, 6));
         rubikCube.get(Faces.BOTTOM).setLeftAndRightCube(0, newLine.substring(6, 9));
         rubikCube.get(Faces.BACK).setLeftAndRightCube(2, newLine.substring(9));
     }
 
-    private void moveBottom() {
+    private void moveBottom(String move) {
         StringBuilder line = new StringBuilder();
         line.append(rubikCube.get(Faces.FRONT).getTopAndBottomLine(2));
         line.append(rubikCube.get(Faces.RIGHT).getTopAndBottomLine(2));
         line.append(rubikCube.get(Faces.BACK).getTopAndBottomLine(2));
         line.append(rubikCube.get(Faces.LEFT).getTopAndBottomLine(2));
-        String newLine = line.substring(9) + line.substring(0, 9);
+        String newLine = clockwiseOrCounter(move,line);
         rubikCube.get(Faces.FRONT).setTopAndBottomCube(2, newLine.substring(0, 3));
         rubikCube.get(Faces.RIGHT).setTopAndBottomCube(2, newLine.substring(3, 6));
         rubikCube.get(Faces.BACK).setTopAndBottomCube(2, newLine.substring(6, 9));
         rubikCube.get(Faces.LEFT).setTopAndBottomCube(2, newLine.substring(9));
     }
 
-    private void moveTop() {
+    private void moveTop(String move) {
         StringBuilder line = new StringBuilder();
         line.append(rubikCube.get(Faces.FRONT).getTopAndBottomLine(0));
         line.append(rubikCube.get(Faces.LEFT).getTopAndBottomLine(0));
         line.append(rubikCube.get(Faces.BACK).getTopAndBottomLine(0));
         line.append(rubikCube.get(Faces.RIGHT).getTopAndBottomLine(0));
-        String newLine = line.substring(9) + line.substring(0, 9);
+        String newLine = clockwiseOrCounter(move,line);
         rubikCube.get(Faces.FRONT).setTopAndBottomCube(0, newLine.substring(0, 3));
         rubikCube.get(Faces.LEFT).setTopAndBottomCube(0, newLine.substring(3, 6));
         rubikCube.get(Faces.BACK).setTopAndBottomCube(0, newLine.substring(6, 9));
         rubikCube.get(Faces.RIGHT).setTopAndBottomCube(0, newLine.substring(9));
     }
 
-    private void moveFront() {
+    private void moveFront(String move) {
         StringBuilder line = new StringBuilder();
         line.append(rubikCube.get(Faces.TOP).getTopAndBottomLine(2));
         line.append(rubikCube.get(Faces.RIGHT).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.BOTTOM).getTopAndBottomLine(0));
         line.append(rubikCube.get(Faces.LEFT).getLeftAndRightLine(2));
-        String newLine = line.substring(9) + line.substring(0, 9);
+        String newLine = clockwiseOrCounter(move,line);
         rubikCube.get(Faces.TOP).setTopAndBottomCube(2, newLine.substring(0, 3));
         rubikCube.get(Faces.RIGHT).setLeftAndRightCube(0, newLine.substring(3, 6));
         rubikCube.get(Faces.BOTTOM).setTopAndBottomCube(0, newLine.substring(6, 9));
         rubikCube.get(Faces.LEFT).setLeftAndRightCube(2, newLine.substring(9));
     }
 
-    private void moveBack() {
+    private void moveBack(String move) {
         StringBuilder line = new StringBuilder();
         line.append(rubikCube.get(Faces.TOP).getTopAndBottomLine(0));
         line.append(rubikCube.get(Faces.LEFT).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.BOTTOM).getTopAndBottomLine(2));
         line.append(rubikCube.get(Faces.RIGHT).getLeftAndRightLine(2));
-        String newLine = line.substring(9) + line.substring(0, 9);
+        String newLine = clockwiseOrCounter(move,line);
         rubikCube.get(Faces.TOP).setTopAndBottomCube(0, newLine.substring(0, 3));
         rubikCube.get(Faces.LEFT).setLeftAndRightCube(0, newLine.substring(3, 6));
         rubikCube.get(Faces.BOTTOM).setTopAndBottomCube(2, newLine.substring(6, 9));
         rubikCube.get(Faces.RIGHT).setLeftAndRightCube(2, newLine.substring(9));
     }
-
+    private String clockwiseOrCounter(String move,StringBuilder line){
+        if(move.contains("'")){
+            return line.substring(3)+line.substring(0,3);
+        }
+        return line.substring(9) + line.substring(0, 9);
+    }
 
     private void initRubik() {
         for (Faces face : Faces.values()) {
