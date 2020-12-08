@@ -1,6 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("step-3");
+        RubikCube rubikCube = new RubikCube();
+
     }
 }
