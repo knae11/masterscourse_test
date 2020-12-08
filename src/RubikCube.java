@@ -20,18 +20,22 @@ public class RubikCube {
 
     private void startCubeGame() {
         while (true) {
-            String input = userResponse.getInput();
-            if (input.equals("Q")) {
+            String[] input = userResponse.getInput();
+            if (input[0].equals("Q")) {
                 System.out.println("Bye~");
                 return;
             }
-            system(input);
-            printer.rubikCube(rubikCube);
+            for (String move : input) {
+                System.out.println(move);
+                system(move);
+                printer.rubikCube(rubikCube);
+
+            }
         }
     }
 
-    private void system(String input) {
-        switch (input) {
+    private void system(String move) {
+        switch (move) {
             case "F":
                 moveFront();
                 break;
@@ -53,8 +57,10 @@ public class RubikCube {
             default:
                 break;
         }
+
     }
 
+    //TODO: Make simple methods and implement clockOtherwise conditions
     private void moveRight() {
         StringBuilder line = new StringBuilder();
         line.append(rubikCube.get(Faces.TOP).getLeftAndRightLine(2));
