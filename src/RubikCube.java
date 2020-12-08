@@ -1,15 +1,27 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Scanner;
 
 public class RubikCube {
 
     private final List<CubeFace> rubikCube = new ArrayList<>();
-
-    public RubikCube() {
+    UserResponse userResponse;
+    public RubikCube(Scanner scanner) {
+        userResponse = new UserResponse(scanner);
         initRubik();
         printRubik();
+        startCubeGame();
+    }
+
+    private void startCubeGame() {
+        while(true){
+            String input = userResponse.getInput();
+            if (input.equals("Q")) {
+                System.out.println("Bye~");
+                return;
+            }
+            printRubik();
+        }
     }
 
     private void printRubik() {
