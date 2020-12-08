@@ -9,6 +9,7 @@ public class RubikCube {
     private final Map<Faces, CubeFace> rubikCube = new HashMap<>();
     UserResponse userResponse;
     Printer printer;
+    private int counter=0;
 
     public RubikCube(Scanner scanner) {
         userResponse = new UserResponse(scanner);
@@ -17,14 +18,16 @@ public class RubikCube {
         printer.rubikCube(rubikCube);
         startCubeGame();
     }
-
+    public int getCounter(){
+        return counter;
+    }
     private void startCubeGame() {
         while (true) {
             String[] input = userResponse.getInput();
             if (input[0].equals("Q")) {
-                System.out.println("Bye~");
                 return;
             }
+            counter+=input.length;
             for (String move : input) {
                 System.out.println(move);
                 system(move);
