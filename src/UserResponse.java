@@ -26,7 +26,7 @@ public class UserResponse {
             }
         }
     }
-    //TODO: 적절하게 연산 가능하게 쪼개기 - 숫자연산부분
+
     private String[] splitToValidKeys(String input) {
         List<String> validInput = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
@@ -34,9 +34,12 @@ public class UserResponse {
                 validInput.set(validInput.size()- 1, validInput.get(validInput.size()- 1) + input.charAt(i));
                 continue;
             }
+            if(input.charAt(i) == '2'){
+                validInput.set(validInput.size()- 1, validInput.get(validInput.size()- 1) + input.charAt(i));
+                continue;
+            }
             validInput.add(String.valueOf(input.charAt(i)));
         }
-
         return makeToStringArray(validInput);
     }
 
