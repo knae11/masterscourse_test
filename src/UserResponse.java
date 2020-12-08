@@ -1,11 +1,10 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class UserResponse {
 
     private final Scanner scanner;
-    private Validator validator;
+    private final Validator validator;
 
     public UserResponse(Scanner scanner) {
         this.scanner = scanner;

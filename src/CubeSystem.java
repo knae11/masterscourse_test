@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CubeSystem {
@@ -70,15 +69,15 @@ public class CubeSystem {
     }
 
     private String moveTop(String round) {
-        String leftLine = "";
+        StringBuilder leftLine = new StringBuilder();
         for (int i = 0; i < 3; i++) {
-            leftLine += cube[0][i];
+            leftLine.append(cube[0][i]);
         }
         if (round.contains("'")) {
-            return leftLine.substring(2, 3) + leftLine.substring(0, 2);
+            return leftLine.charAt(2) + leftLine.substring(0, 2);
         }
 
-        return leftLine.substring(1, 3) + leftLine.substring(0, 1);
+        return leftLine.substring(1, 3) + leftLine.charAt(0);
     }
 
     private void setTopLineCube(String movedLine) {
@@ -88,14 +87,14 @@ public class CubeSystem {
     }
 
     private String moveBottom(String round) {
-        String leftLine = "";
+        StringBuilder leftLine = new StringBuilder();
         for (int i = 0; i < 3; i++) {
-            leftLine += cube[2][i];
+            leftLine.append(cube[2][i]);
         }
         if (round.contains("'")) {
-            return leftLine.substring(1, 3) + leftLine.substring(0, 1);
+            return leftLine.substring(1, 3) + leftLine.charAt(0);
         }
-        return leftLine.substring(2, 3) + leftLine.substring(0, 2);
+        return leftLine.charAt(2) + leftLine.substring(0, 2);
     }
 
     private void setBottomLineCube(String movedLine) {
@@ -106,14 +105,14 @@ public class CubeSystem {
     }
 
     private String moveRight(String round) {
-        String leftLine = "";
+        StringBuilder leftLine = new StringBuilder();
         for (int i = 0; i < 3; i++) {
-            leftLine += cube[i][2];
+            leftLine.append(cube[i][2]);
         }
         if (round.contains("'")) {
-            return leftLine.substring(2, 3) + leftLine.substring(0, 2);
+            return leftLine.charAt(2) + leftLine.substring(0, 2);
         }
-        return leftLine.substring(1, 3) + leftLine.substring(0, 1);
+        return leftLine.substring(1, 3) + leftLine.charAt(0);
     }
 
     private void setRightLineCube(String movedLine) {
@@ -129,14 +128,14 @@ public class CubeSystem {
     }
 
     private String moveLeft(String round) {
-        String leftLine = "";
+        StringBuilder leftLine = new StringBuilder();
         for (int i = 0; i < 3; i++) {
-            leftLine += cube[i][0];
+            leftLine.append(cube[i][0]);
         }
         if (round.contains("'")) {
-            return leftLine.substring(1, 3) + leftLine.substring(0, 1);
+            return leftLine.substring(1, 3) + leftLine.charAt(0);
         }
-        return leftLine.substring(2, 3) + leftLine.substring(0, 2);
+        return leftLine.charAt(2) + leftLine.substring(0, 2);
 
     }
 

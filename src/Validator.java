@@ -2,7 +2,7 @@ import java.util.HashSet;
 
 public class Validator {
 
-    private HashSet<Character> validKeys = new HashSet<>();
+    private final HashSet<Character> validKeys = new HashSet<>();
     public Validator(){
         initKeys();
     }
