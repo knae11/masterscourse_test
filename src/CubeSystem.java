@@ -19,7 +19,7 @@ public class CubeSystem {
     private void startCube() {
         while(true){
             String[] input = userResponse.getInput();
-            if(input.equals("Q")){
+            if(input[0].equals("Q")){
                 System.out.println("Bye~");
                 return;
             }

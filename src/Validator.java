@@ -12,6 +12,7 @@ public class Validator {
             validKeys.add('R');
             validKeys.add('L');
             validKeys.add('B');
+            validKeys.add('Q');
             validKeys.add('\'');
     }
 
