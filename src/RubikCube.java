@@ -9,7 +9,7 @@ public class RubikCube {
     private final Map<Faces, CubeFace> rubikCube = new HashMap<>();
     UserResponse userResponse;
     Printer printer;
-    private int counter=0;
+    private int counter = 0;
 
     public RubikCube(Scanner scanner) {
         userResponse = new UserResponse(scanner);
@@ -18,16 +18,18 @@ public class RubikCube {
         printer.rubikCube(rubikCube);
         startCubeGame();
     }
-    public int getCounter(){
+
+    public int getCounter() {
         return counter;
     }
+
     private void startCubeGame() {
         while (true) {
             String[] input = userResponse.getInput();
             if (input[0].equals("Q")) {
                 return;
             }
-            counter+=input.length;
+            counter += input.length;
             for (String move : input) {
                 System.out.println(move);
                 system(move);
@@ -38,35 +40,24 @@ public class RubikCube {
     }
 
     private void system(String move) {
-        switch (move) {
-            case "F":
-            case "F'":
-                moveFront(move);
-                break;
-            case "U":
-            case "U'":
-                moveTop(move);
-                break;
-            case "D":
-            case "D'":
-                moveBottom(move);
-                break;
-            case "B":
-            case "B'":
-                moveBack(move);
-                break;
-            case "L":
-            case "L'":
-                moveLeft(move);
-                break;
-            case "R":
-            case "R'":
-                moveRight(move);
-                break;
-            default:
-                break;
+        if (move.contains("F")) {
+            moveFront(move);
         }
-
+        if (move.contains("U")) {
+            moveTop(move);
+        }
+        if (move.contains("D")) {
+            moveBottom(move);
+        }
+        if (move.contains("B")) {
+            moveBack(move);
+        }
+        if (move.contains("L")) {
+            moveLeft(move);
+        }
+        if (move.contains("R")) {
+            moveRight(move);
+        }
     }
 
     private void moveRight(String move) {
@@ -75,7 +66,7 @@ public class RubikCube {
         line.append(rubikCube.get(Faces.BACK).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.BOTTOM).getLeftAndRightLine(2));
         line.append(rubikCube.get(Faces.FRONT).getLeftAndRightLine(2));
-        String newLine = clockwiseOrCounter(move,line);
+        String newLine = clockwiseOrCounter(move, line);
         rubikCube.get(Faces.TOP).setLeftAndRightCube(2, newLine.substring(0, 3));
         rubikCube.get(Faces.BACK).setLeftAndRightCube(0, newLine.substring(3, 6));
         rubikCube.get(Faces.BOTTOM).setLeftAndRightCube(2, newLine.substring(6, 9));
@@ -88,7 +79,7 @@ public class RubikCube {
         line.append(rubikCube.get(Faces.FRONT).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.BOTTOM).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.BACK).getLeftAndRightLine(2));
-        String newLine = clockwiseOrCounter(move,line);
+        String newLine = clockwiseOrCounter(move, line);
         rubikCube.get(Faces.TOP).setLeftAndRightCube(0, newLine.substring(0, 3));
         rubikCube.get(Faces.FRONT).setLeftAndRightCube(0, newLine.substring(3, 6));
         rubikCube.get(Faces.BOTTOM).setLeftAndRightCube(0, newLine.substring(6, 9));
@@ -101,7 +92,7 @@ public class RubikCube {
         line.append(rubikCube.get(Faces.RIGHT).getTopAndBottomLine(2));
         line.append(rubikCube.get(Faces.BACK).getTopAndBottomLine(2));
         line.append(rubikCube.get(Faces.LEFT).getTopAndBottomLine(2));
-        String newLine = clockwiseOrCounter(move,line);
+        String newLine = clockwiseOrCounter(move, line);
         rubikCube.get(Faces.FRONT).setTopAndBottomCube(2, newLine.substring(0, 3));
         rubikCube.get(Faces.RIGHT).setTopAndBottomCube(2, newLine.substring(3, 6));
         rubikCube.get(Faces.BACK).setTopAndBottomCube(2, newLine.substring(6, 9));
@@ -114,7 +105,7 @@ public class RubikCube {
         line.append(rubikCube.get(Faces.LEFT).getTopAndBottomLine(0));
         line.append(rubikCube.get(Faces.BACK).getTopAndBottomLine(0));
         line.append(rubikCube.get(Faces.RIGHT).getTopAndBottomLine(0));
-        String newLine = clockwiseOrCounter(move,line);
+        String newLine = clockwiseOrCounter(move, line);
         rubikCube.get(Faces.FRONT).setTopAndBottomCube(0, newLine.substring(0, 3));
         rubikCube.get(Faces.LEFT).setTopAndBottomCube(0, newLine.substring(3, 6));
         rubikCube.get(Faces.BACK).setTopAndBottomCube(0, newLine.substring(6, 9));
@@ -127,7 +118,7 @@ public class RubikCube {
         line.append(rubikCube.get(Faces.RIGHT).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.BOTTOM).getTopAndBottomLine(0));
         line.append(rubikCube.get(Faces.LEFT).getLeftAndRightLine(2));
-        String newLine = clockwiseOrCounter(move,line);
+        String newLine = clockwiseOrCounter(move, line);
         rubikCube.get(Faces.TOP).setTopAndBottomCube(2, newLine.substring(0, 3));
         rubikCube.get(Faces.RIGHT).setLeftAndRightCube(0, newLine.substring(3, 6));
         rubikCube.get(Faces.BOTTOM).setTopAndBottomCube(0, newLine.substring(6, 9));
@@ -140,15 +131,16 @@ public class RubikCube {
         line.append(rubikCube.get(Faces.LEFT).getLeftAndRightLine(0));
         line.append(rubikCube.get(Faces.BOTTOM).getTopAndBottomLine(2));
         line.append(rubikCube.get(Faces.RIGHT).getLeftAndRightLine(2));
-        String newLine = clockwiseOrCounter(move,line);
+        String newLine = clockwiseOrCounter(move, line);
         rubikCube.get(Faces.TOP).setTopAndBottomCube(0, newLine.substring(0, 3));
         rubikCube.get(Faces.LEFT).setLeftAndRightCube(0, newLine.substring(3, 6));
         rubikCube.get(Faces.BOTTOM).setTopAndBottomCube(2, newLine.substring(6, 9));
         rubikCube.get(Faces.RIGHT).setLeftAndRightCube(2, newLine.substring(9));
     }
-    private String clockwiseOrCounter(String move,StringBuilder line){
-        if(move.contains("'")){
-            return line.substring(3)+line.substring(0,3);
+
+    private String clockwiseOrCounter(String move, StringBuilder line) {
+        if (move.contains("'")) {
+            return line.substring(3) + line.substring(0, 3);
         }
         return line.substring(9) + line.substring(0, 9);
     }

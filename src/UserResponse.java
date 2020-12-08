@@ -31,11 +31,16 @@ public class UserResponse {
         List<String> validInput = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == '\'') {
-                validInput.set(i - 1, validInput.get(i - 1) + input.charAt(i));
+                validInput.set(validInput.size()- 1, validInput.get(validInput.size()- 1) + input.charAt(i));
                 continue;
             }
             validInput.add(String.valueOf(input.charAt(i)));
         }
+
+        return makeToStringArray(validInput);
+    }
+
+    private String[] makeToStringArray(List<String> validInput) {
         String[] filteredInput = new String[validInput.size()];
         for (int i = 0; i < validInput.size(); i++) {
             filteredInput[i] = validInput.get(i);
