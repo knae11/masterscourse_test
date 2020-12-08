@@ -139,6 +139,9 @@ public class RubikCube {
     }
 
     private String clockwiseOrCounter(String move, StringBuilder line) {
+        if(move.contains("2")){
+            return line.substring(6)+ line.substring(0,6);
+        }
         if (move.contains("'")) {
             return line.substring(3) + line.substring(0, 3);
         }
