@@ -1,31 +1,34 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
-public class Cube {
+public class CubeSystem {
 
     String[][] cube = {
         {"R", "R", "W"},
         {"G", "C", "W"},
         {"G", "B", "B"}
     };
-    private final Scanner scanner;
-    public Cube(){
-        scanner = new Scanner(System.in);
+    private final UserResponse userResponse;
+    public CubeSystem(Scanner scanner){
+        userResponse = new UserResponse(scanner);
         printCube();
         startCube();
     }
 
     private void startCube() {
         while(true){
-            System.out.print("CUBE> ");
-            String input = scanner.nextLine().toUpperCase();
-            if(input.contains("Q")){
+            String input = userResponse.getInput();
+            if(input.equals("Q")){
                 System.out.println("Bye~");
-                scanner.close();
                 return;
             }
-            printCube();
+            system(input);
         }
+    }
+
+    private void system(String input) {
+        printCube();
+
+
     }
 
     private void printCube(){
