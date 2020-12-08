@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Cube {
 
@@ -7,9 +8,24 @@ public class Cube {
         {"G", "C", "W"},
         {"G", "B", "B"}
     };
-
+    private final Scanner scanner;
     public Cube(){
+        scanner = new Scanner(System.in);
         printCube();
+        startCube();
+    }
+
+    private void startCube() {
+        while(true){
+            System.out.print("CUBE> ");
+            String input = scanner.nextLine().toUpperCase();
+            if(input.contains("Q")){
+                System.out.println("Bye~");
+                scanner.close();
+                return;
+            }
+            printCube();
+        }
     }
 
     private void printCube(){
