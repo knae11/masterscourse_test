@@ -20,8 +20,26 @@ public class RubikCube {
                 System.out.println("Bye~");
                 return;
             }
+            system(input);
             printRubik();
         }
+    }
+
+    private void system(String input) {
+        StringBuilder line = new StringBuilder();
+        if(input.equals("F")){
+           line.append(rubikCube.get(0).getTopAndBottomLine(2));
+           line.append(rubikCube.get(3).getLeftAndRightLine(0));
+           line.append(rubikCube.get(5).getTopAndBottomLine(0));
+           line.append(rubikCube.get(1).getLeftAndRightLine(2));
+        }
+
+        String newLine = line.substring(9)+line.substring(0,9);
+
+        rubikCube.get(0).setTopAndBottomCube(2, newLine.substring(0,3));
+        rubikCube.get(3).setLeftAndRightCube(0, newLine.substring(3,6));
+        rubikCube.get(5).setTopAndBottomCube(0, newLine.substring(6,9));
+        rubikCube.get(1).setLeftAndRightCube(2, newLine.substring(9));
     }
 
     private void printRubik() {

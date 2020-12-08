@@ -20,7 +20,7 @@ public class CubeFace {
         return line;
     }
 
-    private StringBuilder getTopAndBottomLine(int row) {
+    public StringBuilder getTopAndBottomLine(int row) {
         StringBuilder line = new StringBuilder();
         for (int i = 0; i < 3; i++) {
             line.append(cube[row][i]);
@@ -34,7 +34,7 @@ public class CubeFace {
         }
     }
 
-    private void setTopAndBottomCube(int row, String movedLine) {
+    public void setTopAndBottomCube(int row, String movedLine) {
         for (int i = 0; i < 3; i++) {
             cube[row][i] = movedLine.charAt(i);
         }
