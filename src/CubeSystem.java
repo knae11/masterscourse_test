@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CubeSystem {
@@ -7,6 +8,7 @@ public class CubeSystem {
         {"G", "C", "W"},
         {"G", "B", "B"}
     };
+
     private final UserResponse userResponse;
     public CubeSystem(Scanner scanner){
         userResponse = new UserResponse(scanner);
@@ -16,17 +18,20 @@ public class CubeSystem {
 
     private void startCube() {
         while(true){
-            String input = userResponse.getInput();
+            String[] input = userResponse.getInput();
             if(input.equals("Q")){
                 System.out.println("Bye~");
                 return;
             }
-            system(input);
+           system(input);
         }
     }
 
-    private void system(String input) {
-        printCube();
+    private void system(String[] input) {
+        for(String round: input){
+            System.out.println(round);
+            printCube();
+        }
 
 
     }
