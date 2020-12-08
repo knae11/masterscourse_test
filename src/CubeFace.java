@@ -4,13 +4,11 @@ public class CubeFace {
     public CubeFace(char color){
         initCubeFace(color);
     }
-    public void printFace(){
-        for(int i = 0; i<3; i++){
+    public void printOneLineOfFace(int i){
             for (int j=0; j<3; j++){
-                System.out.print(cube[i][j]);
+                System.out.printf("%3c",cube[i][j]);
             }
-            System.out.println();
-        }
+
     }
 
     private void initCubeFace(char color) {
