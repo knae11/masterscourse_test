@@ -5,8 +5,9 @@ import java.util.Scanner;
 public class UserResponse {
 
     private final Scanner scanner;
-
     private final Validator validator;
+
+
 
     public UserResponse(Scanner scanner) {
         this.scanner = scanner;
@@ -15,7 +16,7 @@ public class UserResponse {
 
     //TODO : validator check
     public boolean askRandomMix(){
-        System.out.println("\n랜덤 믹스를 원하시면 Y를 아니면 N를 입력해 주세요");
+        System.out.println(Messages.ASKING_MIX);
         String answer = scanner.nextLine().trim().toUpperCase();
         if(answer.equals("Y")){
             return true;
@@ -25,7 +26,7 @@ public class UserResponse {
     public String[] getInput() {
         while (true) {
             try {
-                System.out.print("CUBE> ");
+                System.out.print(Messages.RESPONSE_PREFIX);
                 String input = scanner.nextLine().trim().toUpperCase();
                 validator.checkInput(input);
                 return splitToValidKeys(input);

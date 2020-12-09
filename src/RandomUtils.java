@@ -9,8 +9,8 @@ public class RandomUtils {
     }
 
     public static int nextInt(int startInclusive, int endInclusive){
-        if(endInclusive<startInclusive){
-            throw new IllegalArgumentException("뒷자리수는 앞자리보다 같거나 커야한다.");
+        if(endInclusive<=startInclusive){
+            throw new IllegalArgumentException(Messages.END_BIGGER_THAN_START);
         }
         return startInclusive + random.nextInt(endInclusive-startInclusive+1);
     }

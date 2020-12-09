@@ -49,7 +49,7 @@ public class RubikCube {
                 printer.rubikCube(rubikCube);
             }
             if (checkSuccess()) {
-                System.out.println("\n큐브를 맞추시다니 대단합니다. 축하드려요!🎉");
+                System.out.println(Messages.WOW_GREAT);
                 return;
             }
         }

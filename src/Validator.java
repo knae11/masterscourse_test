@@ -25,20 +25,20 @@ public class Validator {
         for (int i = 0; i < input.length(); i++) {
             char letter = input.charAt(i);
             if (!validKeys.contains(letter)) {
-                throw new IllegalArgumentException("연산가능한 유효한 문자를 입력해 주세요");
+                throw new IllegalArgumentException(Messages.VALID_INPUT_NEEDED);
             }
         }
     }
 
     private void checkEmpty(String input) {
         if (input.isEmpty()) {
-            throw new IllegalArgumentException("값을 입력해 주세요");
+            throw new IllegalArgumentException(Messages.VALUE_NEEDED);
         }
     }
 
     private void checkWhiteSpace(String input) {
         if (input.split(" ").length > 1) {
-            throw new IllegalArgumentException("공백없이 원하는 값을 입력해주세요");
+            throw new IllegalArgumentException(Messages.BAN_WHITESPACE);
         }
     }
 }

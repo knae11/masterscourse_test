@@ -11,8 +11,8 @@ public class Main {
         scanner.close();
         final int time = (int)((end-start)/1000);
 
-        System.out.printf("경과시간: %02d:%02d\n", time/60, time%60);
-        System.out.println("조작갯수: "+rubikCube.getCounter());
-        System.out.println("이용해주셔서 감사합니다. 뚜뚜뚜.");
+        System.out.printf(Messages.TIME_SPEND, time/60, time%60);
+        System.out.println(Messages.MOVE_COUNT+rubikCube.getCounter());
+        System.out.println(Messages.THANKS);
     }
 }
