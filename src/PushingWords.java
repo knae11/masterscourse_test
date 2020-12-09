@@ -16,29 +16,20 @@ public class PushingWords {
 
     private void init() {
         while (true) {
-            System.out.print(">");
+            System.out.print(Constants.PRINT_PREFIX);
             String userLine = scanner.nextLine().trim();
-            if (userLine.equals("q")) {
+            if (userLine.toLowerCase().equals(Constants.EXIT)) {
                 return;
             }
-            if (!parseUserLine(userLine)) {
+            if (!handleUserLine(userLine)) {
                 continue;
             }
             printResult();
         }
     }
 
-    private void printResult() {
-        if (directionLeft) {
-            String resultWord = word.substring(count) + word.substring(0, count);
-            System.out.println(resultWord);
-        } else {
-            System.out.println(word);
-        }
-    }
-
-    private boolean parseUserLine(String line) {
-        String[] parsedLine = line.split(" ");
+    private boolean handleUserLine(String line) {
+        String[] parsedLine = line.split(Constants.SPLIT_DELIMITER);
         try {
             validator.checkInput(parsedLine);
             makeValuesFromParsing(parsedLine);
@@ -50,17 +41,25 @@ public class PushingWords {
     }
 
     private void makeValuesFromParsing(String[] parsedLine) {
-        word = parsedLine[0];
-        count = Math.abs(Integer.parseInt(parsedLine[1]) % word.length());
-        directionLeft = handleDirection(parsedLine[2]);
-        if (Integer.parseInt(parsedLine[1])<0){
+        word = parsedLine[Constants.WORD];
+        count = Math.abs(Integer.parseInt(parsedLine[Constants.COUNT]) % word.length());
+        directionLeft = handleDirection(parsedLine[Constants.DIRECTION]);
+        if (Integer.parseInt(parsedLine[Constants.COUNT]) < 0) {
             directionLeft = !directionLeft;
         }
     }
 
     private boolean handleDirection(String direction) {
-        return direction.toLowerCase().equals("l");
+        return direction.toLowerCase().equals(Constants.LEFT);
     }
 
+    private void printResult() {
+        if (directionLeft) {
+            String resultWord = word.substring(count) + word.substring(0, count);
+            System.out.println(resultWord);
+        } else {
+            System.out.println(word);
+        }
+    }
 
 }

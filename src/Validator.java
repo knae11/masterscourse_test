@@ -1,35 +1,35 @@
 public class Validator {
 
     public Validator() {
-
     }
 
     public void checkInput(String[] parsedLine) {
         checkLineLength(parsedLine);
-        checkNumber(parsedLine[1]);
-        checkDirection(parsedLine[2]);
+        checkNumber(parsedLine[Constants.COUNT]);
+        checkDirection(parsedLine[Constants.DIRECTION]);
     }
 
     private void checkLineLength(String[] parsedLine) {
-        if (parsedLine.length != 3) {
-            throw new IllegalArgumentException("공백을 기준으로 `단어 숫자 방향`을 입력해 주세요.");
+        if (parsedLine.length != Constants.INPUT_UNITS) {
+            throw new IllegalArgumentException(Constants.WORD_NUMBER_DIRECTION);
         }
     }
 
     private void checkNumber(String number) {
         try {
             int num = Integer.parseInt(number);
-            if (-100 > num || 99 < num) {
-                throw new IllegalArgumentException("두번째 값으로 -100이상 100미만의 숫자를 입력해 주세요.");
+            if (Constants.MIN_NUMBER > num || Constants.MAX_NUMBER < num) {
+                throw new IllegalArgumentException(Constants.NUMBER_RANGE);
             }
         } catch (NumberFormatException n) {
-            throw new IllegalArgumentException("두번째 값으로 숫자를 입력해 주세요.");
+            throw new IllegalArgumentException(Constants.NUMBER_ONLY);
         }
     }
 
     private void checkDirection(String direction) {
-        if (!direction.toLowerCase().equals("r") && !direction.toLowerCase().equals("l")) {
-            throw new IllegalArgumentException("세번째 값으로 r,l,R,L 중 하나를 입력해 주세요");
+        if (!direction.toLowerCase().equals(Constants.RIGHT) && !direction.toLowerCase()
+            .equals(Constants.LEFT)) {
+            throw new IllegalArgumentException(Constants.DIRECTIONS);
         }
     }
 
