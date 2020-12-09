@@ -15,6 +15,13 @@ public class Validator {
         }
     }
 
+    public void checkYesOrNo(String answer) {
+        if (!answer.equals("Y") && !answer.equals("N")) {
+            throw new IllegalArgumentException(Messages.YES_NO_ANSWER);
+        }
+
+    }
+
     public void checkInput(String input) {
         checkEmpty(input);
         checkWhiteSpace(input);

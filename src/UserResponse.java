@@ -7,22 +7,24 @@ public class UserResponse {
     private final Scanner scanner;
     private final Validator validator;
 
-
-
     public UserResponse(Scanner scanner) {
         this.scanner = scanner;
         validator = new Validator();
     }
 
-    //TODO : validator check
-    public boolean askRandomMix(){
-        System.out.println(Messages.ASKING_MIX);
-        String answer = scanner.nextLine().trim().toUpperCase();
-        if(answer.equals("Y")){
-            return true;
+    public boolean askRandomMix() {
+        while (true) {
+            try {
+                System.out.println(Messages.ASKING_MIX);
+                String answer = scanner.nextLine().trim().toUpperCase();
+                validator.checkYesOrNo(answer);
+                return answer.equals("Y");
+            } catch (IllegalArgumentException i) {
+                System.out.println(i.getMessage());
+            }
         }
-        return false;
     }
+
     public String[] getInput() {
         while (true) {
             try {
@@ -40,11 +42,13 @@ public class UserResponse {
         List<String> validInput = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == '\'') {
-                validInput.set(validInput.size()- 1, validInput.get(validInput.size()- 1) + input.charAt(i));
+                validInput.set(validInput.size() - 1,
+                    validInput.get(validInput.size() - 1) + input.charAt(i));
                 continue;
             }
-            if(input.charAt(i) == '2'){
-                validInput.set(validInput.size()- 1, validInput.get(validInput.size()- 1) + input.charAt(i));
+            if (input.charAt(i) == '2') {
+                validInput.set(validInput.size() - 1,
+                    validInput.get(validInput.size() - 1) + input.charAt(i));
                 continue;
             }
             validInput.add(String.valueOf(input.charAt(i)));
