@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -14,14 +15,16 @@ public class RubikCube {
         printer = new Printer();
         initRubik();
         printer.rubikCube(rubikCube);
-        askRandomMix();
+        handleRandomMix();
         startCubeGame();
     }
-    //TODO: 무작위 섞기 구현하기
-    private void askRandomMix() {
+
+    private void handleRandomMix() {
         if(userResponse.askRandomMix()){
             RandomMix mixer = new RandomMix();
             String[] randomMix = mixer.getRandomMove();
+            //print check for random Mix
+            //System.out.println(Arrays.toString(randomMix));
             for(String move : randomMix){
                 system(move);
             }

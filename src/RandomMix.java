@@ -1,16 +1,24 @@
-import java.util.Random;
-
 public class RandomMix {
+
+    private final String[] moveCases = {
+        "R","F","U","B","L","D","R'","F'","U'","B'","L'","D'"
+    };
+    private String[] mixArray;
+
     public RandomMix(){
     }
 
     public String[] getRandomMove(){
-        String[] result ={"F","F"};
-        return result;
+        mixArray = new String[RandomUtils.nextInt(8,15)];
+        for(int i=0; i<mixArray.length; i++){
+            mixArray[i] = getMoveFromNumber();
+        }
+        return mixArray;
     }
 
-//    public static void main(String[] args) {
-//        Random random = new Random();
-//        System.out.println(random.nextInt(8));
-//    }
+    private String getMoveFromNumber() {
+        int randomNumber = RandomUtils.nextInt(0,11);
+        return moveCases[randomNumber];
+    }
+
 }
