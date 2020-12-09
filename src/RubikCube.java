@@ -23,8 +23,10 @@ public class RubikCube {
         if(userResponse.askRandomMix()){
             RandomMix mixer = new RandomMix();
             String[] randomMix = mixer.getRandomMove();
-            //print check for random Mix
-            //System.out.println(Arrays.toString(randomMix));
+            /*
+            * Print random mix info. Reversed move is answer.
+            System.out.println(Arrays.toString(randomMix));
+             */
             for(String move : randomMix){
                 system(move);
             }
