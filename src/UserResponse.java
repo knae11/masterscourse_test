@@ -10,10 +10,18 @@ public class UserResponse {
 
     public UserResponse(Scanner scanner) {
         this.scanner = scanner;
-
         validator = new Validator();
     }
 
+    //TODO : validator check
+    public boolean askRandomMix(){
+        System.out.println("\n랜덤 믹스를 원하시면 Y를 아니면 N를 입력해 주세요");
+        String answer = scanner.nextLine().trim().toUpperCase();
+        if(answer.equals("Y")){
+            return true;
+        }
+        return false;
+    }
     public String[] getInput() {
         while (true) {
             try {

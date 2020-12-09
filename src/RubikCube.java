@@ -14,7 +14,19 @@ public class RubikCube {
         printer = new Printer();
         initRubik();
         printer.rubikCube(rubikCube);
+        askRandomMix();
         startCubeGame();
+    }
+    //TODO: 무작위 섞기 구현하기
+    private void askRandomMix() {
+        if(userResponse.askRandomMix()){
+            RandomMix mixer = new RandomMix();
+            String[] randomMix = mixer.getRandomMove();
+            for(String move : randomMix){
+                system(move);
+            }
+            printer.rubikCube(rubikCube);
+        }
     }
 
     public int getCounter() {
