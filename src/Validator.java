@@ -8,12 +8,9 @@ public class Validator {
     }
 
     private void initKeys() {
-            validKeys.add('U');
-            validKeys.add('R');
-            validKeys.add('L');
-            validKeys.add('B');
-            validKeys.add('Q');
-            validKeys.add('\'');
+        for(ValidKeys key: ValidKeys.values()){
+            validKeys.add(key.getKey());
+        }
     }
 
     public void checkInput(String input){
@@ -26,20 +23,20 @@ public class Validator {
        for(int i=0; i<input.length(); i++){
            char letter = input.charAt(i);
            if(!validKeys.contains(letter)){
-               throw new IllegalArgumentException("연산가능한 유효한 문자를 입력해 주세요");
+               throw new IllegalArgumentException(Constants.INVALID_INPUT);
            }
        }
     }
 
     private void checkEmpty(String input) {
         if(input.isEmpty()){
-            throw new IllegalArgumentException("값을 입력해 주세요");
+            throw new IllegalArgumentException(Constants.IS_EMPTY);
         }
     }
 
     private void checkWhiteSpace(String input) {
-        if(input.split(" ").length > 1){
-            throw new IllegalArgumentException("공백없이 원하는 값을 입력해주세요");
+        if(input.split(Constants.SPLIT_DELIMITER).length > 1){
+            throw new IllegalArgumentException(Constants.BAN_WHITESPACE);
         }
     }
 }

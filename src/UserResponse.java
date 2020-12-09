@@ -14,7 +14,7 @@ public class UserResponse {
     public String[] getInput() {
         while (true) {
             try {
-                System.out.print("CUBE> ");
+                System.out.print(Constants.INPUT_PREFIX);
                 String input = scanner.nextLine().trim().toUpperCase();
                 validator.checkInput(input);
                 return splitToValidKeys(input);
@@ -27,8 +27,8 @@ public class UserResponse {
     private String[] splitToValidKeys(String input) {
         ArrayList<String> validInput = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) == '\'') {
-                validInput.set(i - 1, validInput.get(i - 1) + input.charAt(i));
+            if (input.charAt(i) == ValidKeys.REVERSE.getKey()) {
+                validInput.set(validInput.size() - 1, validInput.get(validInput.size() - 1) + input.charAt(i));
                 continue;
             }
             validInput.add(String.valueOf(input.charAt(i)));

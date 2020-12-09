@@ -19,73 +19,65 @@ public class CubeSystem {
     private void startCube() {
         while (true) {
             String[] input = userResponse.getInput();
-            if (input[0].equals("Q")) {
-                System.out.println("Bye~");
+            if (input[0].equals(ValidKeys.EXIT.getKeyString())) {
+                System.out.println(Constants.ENDING_MESSAGE);
                 return;
             }
-            system(input);
+            runSystem(input);
         }
     }
 
-    private void system(String[] input) {
-        for (String round : input) {
-            System.out.println(round);
-            handleCube(round);
+    private void runSystem(String[] input) {
+        for (String move : input) {
+            System.out.println(move);
+            handleCube(move);
             printCube();
         }
     }
 
-    private void handleCube(String round) {
+    private void handleCube(String move) {
         String movedLine;
-        switch (round) {
-            case "L":
-            case "L'":
-                movedLine = moveLeft(round);
-                setLeftAndRightCube(0, movedLine);
-                break;
-            case "R":
-            case "R'":
-                movedLine = moveRight(round);
-                setLeftAndRightCube(2, movedLine);
-                break;
-            case "U":
-            case "U'":
-                movedLine = moveTop(round);
-                setTopAndBottomCube(0, movedLine);
-                break;
-            case "B":
-            case "B'":
-                movedLine = moveBottom(round);
-                setTopAndBottomCube(2, movedLine);
-                break;
-            default:
-                break;
+        if (move.contains(ValidKeys.LEFT.getKeyString())) {
+            movedLine = moveLeft(move);
+            setLeftAndRightCube(Constants.TOP_OR_LEFT, movedLine);
+        }
+        if (move.contains(ValidKeys.RIGHT.getKeyString())) {
+            movedLine = moveRight(move);
+            setLeftAndRightCube(Constants.BOTTOM_OR_RIGHT, movedLine);
+        }
+        if (move.contains(ValidKeys.UP.getKeyString())) {
+            movedLine = moveTop(move);
+            setTopAndBottomCube(Constants.TOP_OR_LEFT, movedLine);
+        }
+        if (move.contains(ValidKeys.BOTTOM.getKeyString())) {
+            movedLine = moveBottom(move);
+            setTopAndBottomCube(Constants.BOTTOM_OR_RIGHT, movedLine);
         }
     }
 
-    private String moveTop(String round) {
-        StringBuilder line = getTopAndBottomLine(0);
-        return pushTopAndRight(line, round);
+    private String moveTop(String move) {
+        StringBuilder line = getTopAndBottomLine(Constants.TOP_OR_LEFT);
+        return pushTopAndRight(line, move);
     }
 
-    private String moveBottom(String round) {
-        StringBuilder line = getTopAndBottomLine(2);
-        return pushBottomAndLeft(line, round);
+    private String moveBottom(String move) {
+        StringBuilder line = getTopAndBottomLine(Constants.BOTTOM_OR_RIGHT);
+        return pushBottomAndLeft(line, move);
     }
 
-    private String moveRight(String round) {
-        StringBuilder line = getLeftAndRightLine(2);
-        return pushTopAndRight(line, round);
+    private String moveRight(String move) {
+        StringBuilder line = getLeftAndRightLine(Constants.BOTTOM_OR_RIGHT);
+        return pushTopAndRight(line, move);
     }
 
-    private String moveLeft(String round) {
-        StringBuilder line = getLeftAndRightLine(0);
-        return pushBottomAndLeft(line, round);
+    private String moveLeft(String move) {
+        StringBuilder line = getLeftAndRightLine(Constants.TOP_OR_LEFT);
+        return pushBottomAndLeft(line, move);
     }
 
     private StringBuilder getTopAndBottomLine(int row) {
         StringBuilder line = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < Constants.CUBE_SIZE; i++) {
             line.append(cube[row][i]);
         }
         return line;
@@ -93,36 +85,36 @@ public class CubeSystem {
 
     private StringBuilder getLeftAndRightLine(int column) {
         StringBuilder line = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < Constants.CUBE_SIZE; i++) {
             line.append(cube[i][column]);
         }
         return line;
     }
 
     private void setTopAndBottomCube(int row, String movedLine) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < Constants.CUBE_SIZE; i++) {
             cube[row][i] = movedLine.charAt(i);
         }
     }
 
     private void setLeftAndRightCube(int column, String movedLine) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < Constants.CUBE_SIZE; i++) {
             cube[i][column] = movedLine.charAt(i);
         }
     }
 
-    private String pushBottomAndLeft(StringBuilder line, String round) {
-        if (round.contains("'")) {
-            return line.substring(1, 3) + line.charAt(0);
+    private String pushBottomAndLeft(StringBuilder line, String move) {
+        if (move.contains(ValidKeys.REVERSE.getKeyString())) {
+            return line.substring(Constants.FIRST + 1) + line.charAt(Constants.FIRST);
         }
-        return line.charAt(2) + line.substring(0, 2);
+        return line.charAt(Constants.LAST) + line.substring(Constants.FIRST, Constants.LAST);
     }
 
-    private String pushTopAndRight(StringBuilder line, String round) {
-        if (round.contains("'")) {
-            return line.charAt(2) + line.substring(0, 2);
+    private String pushTopAndRight(StringBuilder line, String move) {
+        if (move.contains(ValidKeys.REVERSE.getKeyString())) {
+            return line.charAt(Constants.LAST) + line.substring(Constants.FIRST, Constants.LAST);
         }
-        return line.substring(1, 3) + line.charAt(0);
+        return line.substring(Constants.FIRST + 1) + line.charAt(Constants.FIRST);
     }
 
     private void printCube() {
