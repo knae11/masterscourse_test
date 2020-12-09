@@ -1,7 +1,7 @@
 public class CubeFace {
 
     public static final int CUBE_SIZE = 3;
-    public static final int CUBE_CENTER = CUBE_SIZE/2;
+    public static final int CUBE_CENTER = CUBE_SIZE / 2;
 
 
     private char[][] cube = new char[CUBE_SIZE][CUBE_SIZE];
@@ -16,14 +16,20 @@ public class CubeFace {
         }
     }
 
-    //TODO : indent 가 너무 깊다. 줄이는 방법 찾기
     public boolean completeFace() {
-        char standard = cube[CUBE_CENTER][CUBE_CENTER];
         for (int i = 0; i < CUBE_SIZE; i++) {
-            for (int j = 0; j < CUBE_SIZE; j++) {
-                if (standard != cube[i][j]) {
-                    return false;
-                }
+            if(!checkCompleteRow(i)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkCompleteRow(int i) {
+        char standard = cube[CUBE_CENTER][CUBE_CENTER];
+        for (int j = 0; j < CUBE_SIZE; j++) {
+            if (standard != cube[i][j]) {
+                return false;
             }
         }
         return true;
