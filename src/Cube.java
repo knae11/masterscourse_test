@@ -1,6 +1,4 @@
-import java.util.Scanner;
-
-public class CubeSystem {
+public class Cube {
 
     private char[][] cube = {
         {'R', 'R', 'W'},
@@ -8,34 +6,14 @@ public class CubeSystem {
         {'G', 'B', 'B'}
     };
 
-    private final UserResponse userResponse;
-
-    public CubeSystem(Scanner scanner) {
-        userResponse = new UserResponse(scanner);
-        printCube();
-        startCube();
+    public Cube() {
     }
 
-    private void startCube() {
-        while (true) {
-            String[] input = userResponse.getInput();
-            if (input[0].equals(ValidKeys.EXIT.getKeyString())) {
-                System.out.println(Constants.ENDING_MESSAGE);
-                return;
-            }
-            runSystem(input);
-        }
+    public char[][] getCube() {
+        return cube;
     }
 
-    private void runSystem(String[] input) {
-        for (String move : input) {
-            System.out.println(move);
-            handleCube(move);
-            printCube();
-        }
-    }
-
-    private void handleCube(String move) {
+    public void handleCube(String move) {
         String movedLine;
         if (move.contains(ValidKeys.LEFT.getKeyString())) {
             movedLine = moveLeft(move);
@@ -115,15 +93,6 @@ public class CubeSystem {
             return line.charAt(Constants.LAST) + line.substring(Constants.FIRST, Constants.LAST);
         }
         return line.substring(Constants.FIRST + 1) + line.charAt(Constants.FIRST);
-    }
-
-    private void printCube() {
-        for (char[] row : cube) {
-            for (char box : row) {
-                System.out.printf("%3s", box);
-            }
-            System.out.println();
-        }
     }
 
 }

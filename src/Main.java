@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
-        new CubeSystem(scanner);
+        new Control(scanner);
         scanner.close();
     }
 }
