@@ -1,3 +1,6 @@
+import constants.Messages;
+import constants.StringConstants;
+import constants.ValidMoves;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,13 +13,13 @@ public class Validator {
     }
 
     private void initKeys() {
-        for (ValidKeys key : ValidKeys.values()) {
+        for (ValidMoves key : ValidMoves.values()) {
             validKeys.add(key.getKey());
         }
     }
 
     public void checkYesOrNo(String answer) {
-        if (!answer.equals("Y") && !answer.equals("N")) {
+        if (!answer.equals(StringConstants.YES) && !answer.equals(StringConstants.NO)) {
             throw new IllegalArgumentException(Messages.YES_NO_ANSWER);
         }
 
@@ -44,7 +47,7 @@ public class Validator {
     }
 
     private void checkWhiteSpace(String input) {
-        if (input.split(" ").length > 1) {
+        if (input.split(StringConstants.SPLIT_DELIMITER).length > 1) {
             throw new IllegalArgumentException(Messages.BAN_WHITESPACE);
         }
     }

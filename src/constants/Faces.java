@@ -1,3 +1,5 @@
+package constants;
+
 public enum Faces {
     FRONT('B'), TOP('W'), BOTTOM('O'), LEFT('G'), RIGHT('Y'), BACK('R');
 
@@ -7,7 +9,7 @@ public enum Faces {
         this.color = color;
     }
 
-    public char getColor(){
+    public char getColor() {
         return color;
     }
 }

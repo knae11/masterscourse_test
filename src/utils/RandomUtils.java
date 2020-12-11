@@ -1,3 +1,6 @@
+package utils;
+
+import constants.Messages;
 import java.util.Random;
 
 public class RandomUtils {

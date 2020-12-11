@@ -1,3 +1,6 @@
+import constants.Messages;
+import constants.StringConstants;
+import constants.ValidMoves;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,7 +21,7 @@ public class UserResponse {
                 System.out.println(Messages.ASKING_MIX);
                 String answer = scanner.nextLine().trim().toUpperCase();
                 validator.checkYesOrNo(answer);
-                return answer.equals("Y");
+                return answer.equals(StringConstants.YES);
             } catch (IllegalArgumentException i) {
                 System.out.println(i.getMessage());
             }
@@ -41,12 +44,12 @@ public class UserResponse {
     private String[] splitToValidKeys(String input) {
         List<String> validInput = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) == '\'') {
+            if (input.charAt(i) == ValidMoves.REVERSE.getKey()) {
                 validInput.set(validInput.size() - 1,
                     validInput.get(validInput.size() - 1) + input.charAt(i));
                 continue;
             }
-            if (input.charAt(i) == '2') {
+            if (input.charAt(i) == ValidMoves.TWO.getKey()) {
                 validInput.set(validInput.size() - 1,
                     validInput.get(validInput.size() - 1) + input.charAt(i));
                 continue;

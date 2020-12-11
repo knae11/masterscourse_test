@@ -1,63 +1,22 @@
-import java.util.Arrays;
+import constants.Faces;
+import constants.NumberConstants;
+import constants.ValidMoves;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class RubikCube {
 
     private final Map<Faces, CubeFace> rubikCube = new HashMap<>();
-    UserResponse userResponse;
-    Printer printer;
-    private int counter = 0;
 
-    public RubikCube(Scanner scanner) {
-        userResponse = new UserResponse(scanner);
-        printer = new Printer();
+    public RubikCube() {
         initRubik();
-        printer.rubikCube(rubikCube);
-        handleRandomMix();
-        startCubeGame();
     }
 
-    private void handleRandomMix() {
-        if(userResponse.askRandomMix()){
-            RandomMix mixer = new RandomMix();
-            String[] randomMix = mixer.getRandomMove();
-            /*
-            * Print random mix info. Reversed move is answer.
-            System.out.println(Arrays.toString(randomMix));
-             */
-            for(String move : randomMix){
-                system(move);
-            }
-            printer.rubikCube(rubikCube);
-        }
+    public Map<Faces, CubeFace> getRubikCube() {
+        return rubikCube;
     }
 
-    public int getCounter() {
-        return counter;
-    }
-
-    private void startCubeGame() {
-        while (true) {
-            String[] input = userResponse.getInput();
-            if (input[0].equals("Q")) {
-                return;
-            }
-            counter += input.length;
-            for (String move : input) {
-                System.out.println(move);
-                system(move);
-                printer.rubikCube(rubikCube);
-            }
-            if (checkSuccess()) {
-                System.out.println(Messages.WOW_GREAT);
-                return;
-            }
-        }
-    }
-
-    private boolean checkSuccess() {
+    public boolean checkSuccess() {
         for (CubeFace face : rubikCube.values()) {
             if (!face.completeFace()) {
                 return false;
@@ -66,113 +25,125 @@ public class RubikCube {
         return true;
     }
 
-    private void system(String move) {
-        if (move.contains("F")) {
-            moveFront(move);
-        }
-        if (move.contains("U")) {
-            moveTop(move);
-        }
-        if (move.contains("D")) {
-            moveBottom(move);
-        }
-        if (move.contains("B")) {
-            moveBack(move);
-        }
-        if (move.contains("L")) {
-            moveLeft(move);
-        }
-        if (move.contains("R")) {
-            moveRight(move);
-        }
+    public void moveRight(String move) {
+        StringBuilder line = new StringBuilder();
+        line.append(rubikCube.get(Faces.TOP).getLeftAndRightLine(NumberConstants.BOTTOM_OR_RIGHT));
+        line.append(rubikCube.get(Faces.BACK).getLeftAndRightLine(NumberConstants.TOP_OR_LEFT));
+        line.append(
+            rubikCube.get(Faces.BOTTOM).getLeftAndRightLine(NumberConstants.BOTTOM_OR_RIGHT));
+        line.append(
+            rubikCube.get(Faces.FRONT).getLeftAndRightLine(NumberConstants.BOTTOM_OR_RIGHT));
+        String newLine = clockwiseOrCounter(move, line);
+        rubikCube.get(Faces.TOP).setLeftAndRightCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(0, NumberConstants.FIRST_UNIT));
+        rubikCube.get(Faces.BACK).setLeftAndRightCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(NumberConstants.FIRST_UNIT, NumberConstants.SECOND_UNIT));
+        rubikCube.get(Faces.BOTTOM).setLeftAndRightCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(NumberConstants.SECOND_UNIT, NumberConstants.THIRD_UNIT));
+        rubikCube.get(Faces.FRONT).setLeftAndRightCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(NumberConstants.THIRD_UNIT));
     }
 
-    private void moveRight(String move) {
+    public void moveLeft(String move) {
         StringBuilder line = new StringBuilder();
-        line.append(rubikCube.get(Faces.TOP).getLeftAndRightLine(2));
-        line.append(rubikCube.get(Faces.BACK).getLeftAndRightLine(0));
-        line.append(rubikCube.get(Faces.BOTTOM).getLeftAndRightLine(2));
-        line.append(rubikCube.get(Faces.FRONT).getLeftAndRightLine(2));
+        line.append(rubikCube.get(Faces.TOP).getLeftAndRightLine(NumberConstants.TOP_OR_LEFT));
+        line.append(rubikCube.get(Faces.FRONT).getLeftAndRightLine(NumberConstants.TOP_OR_LEFT));
+        line.append(rubikCube.get(Faces.BOTTOM).getLeftAndRightLine(NumberConstants.TOP_OR_LEFT));
+        line.append(rubikCube.get(Faces.BACK).getLeftAndRightLine(NumberConstants.BOTTOM_OR_RIGHT));
         String newLine = clockwiseOrCounter(move, line);
-        rubikCube.get(Faces.TOP).setLeftAndRightCube(2, newLine.substring(0, 3));
-        rubikCube.get(Faces.BACK).setLeftAndRightCube(0, newLine.substring(3, 6));
-        rubikCube.get(Faces.BOTTOM).setLeftAndRightCube(2, newLine.substring(6, 9));
-        rubikCube.get(Faces.FRONT).setLeftAndRightCube(2, newLine.substring(9));
+        rubikCube.get(Faces.TOP).setLeftAndRightCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(0, NumberConstants.FIRST_UNIT));
+        rubikCube.get(Faces.FRONT).setLeftAndRightCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(NumberConstants.FIRST_UNIT, NumberConstants.SECOND_UNIT));
+        rubikCube.get(Faces.BOTTOM).setLeftAndRightCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(NumberConstants.SECOND_UNIT, NumberConstants.THIRD_UNIT));
+        rubikCube.get(Faces.BACK).setLeftAndRightCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(NumberConstants.THIRD_UNIT));
     }
 
-    private void moveLeft(String move) {
+    public void moveBottom(String move) {
         StringBuilder line = new StringBuilder();
-        line.append(rubikCube.get(Faces.TOP).getLeftAndRightLine(0));
-        line.append(rubikCube.get(Faces.FRONT).getLeftAndRightLine(0));
-        line.append(rubikCube.get(Faces.BOTTOM).getLeftAndRightLine(0));
-        line.append(rubikCube.get(Faces.BACK).getLeftAndRightLine(2));
+        line.append(
+            rubikCube.get(Faces.FRONT).getTopAndBottomLine(NumberConstants.BOTTOM_OR_RIGHT));
+        line.append(
+            rubikCube.get(Faces.RIGHT).getTopAndBottomLine(NumberConstants.BOTTOM_OR_RIGHT));
+        line.append(rubikCube.get(Faces.BACK).getTopAndBottomLine(NumberConstants.BOTTOM_OR_RIGHT));
+        line.append(rubikCube.get(Faces.LEFT).getTopAndBottomLine(NumberConstants.BOTTOM_OR_RIGHT));
         String newLine = clockwiseOrCounter(move, line);
-        rubikCube.get(Faces.TOP).setLeftAndRightCube(0, newLine.substring(0, 3));
-        rubikCube.get(Faces.FRONT).setLeftAndRightCube(0, newLine.substring(3, 6));
-        rubikCube.get(Faces.BOTTOM).setLeftAndRightCube(0, newLine.substring(6, 9));
-        rubikCube.get(Faces.BACK).setLeftAndRightCube(2, newLine.substring(9));
+        rubikCube.get(Faces.FRONT).setTopAndBottomCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(0, NumberConstants.FIRST_UNIT));
+        rubikCube.get(Faces.RIGHT).setTopAndBottomCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(NumberConstants.FIRST_UNIT, NumberConstants.SECOND_UNIT));
+        rubikCube.get(Faces.BACK).setTopAndBottomCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(NumberConstants.SECOND_UNIT, NumberConstants.THIRD_UNIT));
+        rubikCube.get(Faces.LEFT).setTopAndBottomCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(NumberConstants.THIRD_UNIT));
     }
 
-    private void moveBottom(String move) {
+    public void moveTop(String move) {
         StringBuilder line = new StringBuilder();
-        line.append(rubikCube.get(Faces.FRONT).getTopAndBottomLine(2));
-        line.append(rubikCube.get(Faces.RIGHT).getTopAndBottomLine(2));
-        line.append(rubikCube.get(Faces.BACK).getTopAndBottomLine(2));
-        line.append(rubikCube.get(Faces.LEFT).getTopAndBottomLine(2));
+        line.append(rubikCube.get(Faces.FRONT).getTopAndBottomLine(NumberConstants.TOP_OR_LEFT));
+        line.append(rubikCube.get(Faces.LEFT).getTopAndBottomLine(NumberConstants.TOP_OR_LEFT));
+        line.append(rubikCube.get(Faces.BACK).getTopAndBottomLine(NumberConstants.TOP_OR_LEFT));
+        line.append(rubikCube.get(Faces.RIGHT).getTopAndBottomLine(NumberConstants.TOP_OR_LEFT));
         String newLine = clockwiseOrCounter(move, line);
-        rubikCube.get(Faces.FRONT).setTopAndBottomCube(2, newLine.substring(0, 3));
-        rubikCube.get(Faces.RIGHT).setTopAndBottomCube(2, newLine.substring(3, 6));
-        rubikCube.get(Faces.BACK).setTopAndBottomCube(2, newLine.substring(6, 9));
-        rubikCube.get(Faces.LEFT).setTopAndBottomCube(2, newLine.substring(9));
+        rubikCube.get(Faces.FRONT).setTopAndBottomCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(0, NumberConstants.FIRST_UNIT));
+        rubikCube.get(Faces.LEFT).setTopAndBottomCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(NumberConstants.FIRST_UNIT, NumberConstants.SECOND_UNIT));
+        rubikCube.get(Faces.BACK).setTopAndBottomCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(NumberConstants.SECOND_UNIT, NumberConstants.THIRD_UNIT));
+        rubikCube.get(Faces.RIGHT).setTopAndBottomCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(NumberConstants.THIRD_UNIT));
     }
 
-    private void moveTop(String move) {
+    public void moveFront(String move) {
         StringBuilder line = new StringBuilder();
-        line.append(rubikCube.get(Faces.FRONT).getTopAndBottomLine(0));
-        line.append(rubikCube.get(Faces.LEFT).getTopAndBottomLine(0));
-        line.append(rubikCube.get(Faces.BACK).getTopAndBottomLine(0));
-        line.append(rubikCube.get(Faces.RIGHT).getTopAndBottomLine(0));
+        line.append(rubikCube.get(Faces.TOP).getTopAndBottomLine(NumberConstants.BOTTOM_OR_RIGHT));
+        line.append(rubikCube.get(Faces.RIGHT).getLeftAndRightLine(NumberConstants.TOP_OR_LEFT));
+        line.append(rubikCube.get(Faces.BOTTOM).getTopAndBottomLine(NumberConstants.TOP_OR_LEFT));
+        line.append(rubikCube.get(Faces.LEFT).getLeftAndRightLine(NumberConstants.BOTTOM_OR_RIGHT));
         String newLine = clockwiseOrCounter(move, line);
-        rubikCube.get(Faces.FRONT).setTopAndBottomCube(0, newLine.substring(0, 3));
-        rubikCube.get(Faces.LEFT).setTopAndBottomCube(0, newLine.substring(3, 6));
-        rubikCube.get(Faces.BACK).setTopAndBottomCube(0, newLine.substring(6, 9));
-        rubikCube.get(Faces.RIGHT).setTopAndBottomCube(0, newLine.substring(9));
+        rubikCube.get(Faces.TOP).setTopAndBottomCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(0, NumberConstants.FIRST_UNIT));
+        rubikCube.get(Faces.RIGHT).setLeftAndRightCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(NumberConstants.FIRST_UNIT, NumberConstants.SECOND_UNIT));
+        rubikCube.get(Faces.BOTTOM).setTopAndBottomCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(NumberConstants.SECOND_UNIT, NumberConstants.THIRD_UNIT));
+        rubikCube.get(Faces.LEFT).setLeftAndRightCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(NumberConstants.THIRD_UNIT));
     }
 
-    private void moveFront(String move) {
+    public void moveBack(String move) {
         StringBuilder line = new StringBuilder();
-        line.append(rubikCube.get(Faces.TOP).getTopAndBottomLine(2));
-        line.append(rubikCube.get(Faces.RIGHT).getLeftAndRightLine(0));
-        line.append(rubikCube.get(Faces.BOTTOM).getTopAndBottomLine(0));
-        line.append(rubikCube.get(Faces.LEFT).getLeftAndRightLine(2));
+        line.append(rubikCube.get(Faces.TOP).getTopAndBottomLine(NumberConstants.TOP_OR_LEFT));
+        line.append(rubikCube.get(Faces.LEFT).getLeftAndRightLine(NumberConstants.TOP_OR_LEFT));
+        line.append(
+            rubikCube.get(Faces.BOTTOM).getTopAndBottomLine(NumberConstants.BOTTOM_OR_RIGHT));
+        line.append(
+            rubikCube.get(Faces.RIGHT).getLeftAndRightLine(NumberConstants.BOTTOM_OR_RIGHT));
         String newLine = clockwiseOrCounter(move, line);
-        rubikCube.get(Faces.TOP).setTopAndBottomCube(2, newLine.substring(0, 3));
-        rubikCube.get(Faces.RIGHT).setLeftAndRightCube(0, newLine.substring(3, 6));
-        rubikCube.get(Faces.BOTTOM).setTopAndBottomCube(0, newLine.substring(6, 9));
-        rubikCube.get(Faces.LEFT).setLeftAndRightCube(2, newLine.substring(9));
-    }
-
-    private void moveBack(String move) {
-        StringBuilder line = new StringBuilder();
-        line.append(rubikCube.get(Faces.TOP).getTopAndBottomLine(0));
-        line.append(rubikCube.get(Faces.LEFT).getLeftAndRightLine(0));
-        line.append(rubikCube.get(Faces.BOTTOM).getTopAndBottomLine(2));
-        line.append(rubikCube.get(Faces.RIGHT).getLeftAndRightLine(2));
-        String newLine = clockwiseOrCounter(move, line);
-        rubikCube.get(Faces.TOP).setTopAndBottomCube(0, newLine.substring(0, 3));
-        rubikCube.get(Faces.LEFT).setLeftAndRightCube(0, newLine.substring(3, 6));
-        rubikCube.get(Faces.BOTTOM).setTopAndBottomCube(2, newLine.substring(6, 9));
-        rubikCube.get(Faces.RIGHT).setLeftAndRightCube(2, newLine.substring(9));
+        rubikCube.get(Faces.TOP).setTopAndBottomCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(0, NumberConstants.FIRST_UNIT));
+        rubikCube.get(Faces.LEFT).setLeftAndRightCube(NumberConstants.TOP_OR_LEFT,
+            newLine.substring(NumberConstants.FIRST_UNIT, NumberConstants.SECOND_UNIT));
+        rubikCube.get(Faces.BOTTOM).setTopAndBottomCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(NumberConstants.SECOND_UNIT, NumberConstants.THIRD_UNIT));
+        rubikCube.get(Faces.RIGHT).setLeftAndRightCube(NumberConstants.BOTTOM_OR_RIGHT,
+            newLine.substring(NumberConstants.THIRD_UNIT));
     }
 
     private String clockwiseOrCounter(String move, StringBuilder line) {
-        if (move.contains("2")) {
-            return line.substring(6) + line.substring(0, 6);
+        if (move.contains(ValidMoves.TWO.getKeyString())) {
+            return line.substring(NumberConstants.SECOND_UNIT) + line
+                .substring(0, NumberConstants.SECOND_UNIT);
         }
-        if (move.contains("'")) {
-            return line.substring(3) + line.substring(0, 3);
+        if (move.contains(ValidMoves.REVERSE.getKeyString())) {
+            return line.substring(NumberConstants.FIRST_UNIT) + line
+                .substring(0, NumberConstants.FIRST_UNIT);
         }
-        return line.substring(9) + line.substring(0, 9);
+        return line.substring(NumberConstants.THIRD_UNIT) + line
+            .substring(0, NumberConstants.THIRD_UNIT);
     }
 
     private void initRubik() {
